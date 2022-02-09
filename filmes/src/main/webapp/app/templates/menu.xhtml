@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:body>
+	<ui:composition>
+		
+		<h:form>
+			<p:menubar>
+				<p:menuitem value="Home" icon="pi pi-fw pi-home"></p:menuitem>
+				<p:submenu label="Filmes">
+					<p:menuitem value="Novo Filme" icon="pi pi-fw pi-plus" onclick="PF('filme_dlg').show()"></p:menuitem>
+				</p:submenu>
+				<p:submenu label="Séries">
+					<p:menuitem value="Nova Série" icon="pi pi-fw pi-plus" onclick="PF('serie_dlg').show()"></p:menuitem>
+				</p:submenu>
+				<p:submenu label="Listas" icon="pi pi-fw pi-list">
+					<p:menuitem value="Nova Lista" icon="pi pi-fw pi-plus" onclick="PF('lista_dlg').show()" update="formLista"></p:menuitem>
+				</p:submenu>
+				<div style="align-text=left;">
+					<p:submenu label="#{usuarioMBean.usuario.login}" style="position: absolute; right: 6px;" icon="pi pi-fw pi-id-card">
+						<p:menuitem value="Perfil" icon="pi pi-fw pi-user"></p:menuitem>
+						<p:menuitem value="Sair" icon="pi pi-fw pi-sign-out" action="#{usuarioMBean.sair}"/>
+					</p:submenu>
+				</div>
+			</p:menubar>
+		</h:form>
+		
+		<p:dialog header="Novo Filme" widgetVar="filme_dlg" resizable="false" width="600" showEffect="fade" hideEffect="fade">
+		
+			<h:form>
+				<p:messages id="messages" showDetail="false" closable="true" styleClass="msg">
+			            <p:autoUpdate/>
+			    </p:messages>
+				<h:panelGrid columns="5" cellpadding="5" styleClass="p-mb-3">
+					<center>
+						<p:outputLabel value="Filme: " for="filme"/>
+						<p:inputText id="filme" placeholder="Inserir título do filme" value="#{filmeMBean.titulo}"
+						required="true" requiredMessage="Informe o filme!">	
+						</p:inputText>
+						<p:commandButton action="#{filmeMBean.buscarFilme}" value="Buscar" icon="pi pi-fw pi-search"
+						 style="width: 6rem" update="filmeForm messages"/>
+						 <p:ajaxStatus styleClass="p-d-block p-mb-4">
+					        
+					        <f:facet name="start">
+					            <i class="pi pi-spin pi-spinner loading-icon" aria-hidden="true"></i>
+					        </f:facet>
+					    </p:ajaxStatus>
+					</center>	
+				</h:panelGrid>
+				
+			</h:form>
+			
+			<h:form id="filmeForm">
+				<p:selectOneMenu id="selFilme" value="#{filmeMBean.filme}" converter="filmeConverter"
+                    panelStyle="width:180px" effect="fade" var="f"
+                    filter="true" filterMatchMode="startsWith" style="width: 550px;" required="true">
+                    <p:ajax event="change" process="@this"/>
+                    <f:selectItem itemLabel="Selecione um filme" itemValue="#{null}"
+            		noSelectionOption="true" />
+                    <f:selectItems value="#{filmeMBean.filmesEncontrados}" var="filme"
+                                itemLabel="#{filme.titulo}"/>
+					
+
+					<p:column style="width: 10%">
+                   		 <f:facet name="header">
+                            <h:outputText value="Poster"/>
+                        </f:facet>
+                        <p:graphicImage value="#{f.poster}" style="width:50px; height:70px"/>
+                    </p:column>
+                    
+                    
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Título"/>
+                        </f:facet>
+                        <h:outputText value="#{f.titulo}"/>
+                    </p:column>
+                    
+                    <p:column style="width: 10%">
+                   		 <f:facet name="header">
+                            <h:outputText value="Ano"/>
+                        </f:facet>
+                        <p>#{f.ano}</p>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{filmeMBean.filmesEncontrados.size()} filmes"
+                                    style="font-weight:bold;" styleClass="p-py-1 p-d-block"/>
+                    </f:facet>
+               </p:selectOneMenu>
+			</h:form>
+		    
+		    <f:facet name="footer">
+		        <p:commandButton type="button" value="Cancelar" styleClass="ui-button-flat p-mr-2" style="width: 6rem" onclick="PF('filme_dlg').hide()"/>
+		        <p:commandButton value="Salvar" style="width: 5rem" action="#{filmeMBean.adicionarFilme()}" oncomplete="PF('filme_dlg').hide()">
+		        </p:commandButton>
+		    </f:facet>
+		</p:dialog>
+		
+		<p:dialog header="Nova Série" widgetVar="serie_dlg" resizable="false" width="600" showEffect="fade" hideEffect="fade">
+		
+			<h:form>
+				<p:messages id="messages_s" showDetail="false" closable="true" styleClass="msg">
+			            <p:autoUpdate/>
+			    </p:messages>
+				<h:panelGrid columns="5" cellpadding="5" styleClass="p-mb-3">
+					<center>
+						<p:outputLabel value="Série: " for="serie"/>
+						<p:inputText id="serie" value="#{serieMBean.titulo}" placeholder="Inserir título da série"
+						required="true" requiredMessage="Informe a série!">
+						</p:inputText>
+						<p:commandButton action="#{serieMBean.buscarSerie}" value="Buscar" icon="pi pi-fw pi-search" style="width: 6rem"
+						update="serieForm messages_s"/>
+						<p:ajaxStatus styleClass="p-d-block p-mb-4">
+					        
+					        <f:facet name="start">
+					            <i class="pi pi-spin pi-spinner loading-icon" aria-hidden="true"></i>
+					        </f:facet>
+					    </p:ajaxStatus>
+					</center>	
+				</h:panelGrid>
+			</h:form>
+			
+								
+			<h:form id="serieForm">
+				<p:selectOneMenu id="selSerie" value="#{serieMBean.serie}" converter="serieConverter"
+                                panelStyle="width:180px" effect="fade" var="f"
+                                filter="true" filterMatchMode="startsWith" style="width: 550px;">
+
+					<p:ajax event="change" process="@this"/>
+					<f:selectItem itemLabel="Selecione uma série" itemValue="#{null}" noSelectionOption="true"/>
+                    <f:selectItems value="#{serieMBean.seriesEncontradas}" var="serie"
+                                itemLabel="#{serie.titulo}"/>
+
+
+					<p:column style="width: 10%">
+                   		 <f:facet name="header">
+                            <h:outputText value="Poster"/>
+                        </f:facet>
+                        <p:graphicImage value="#{f.poster}" style="width:50px; height:70px"/>
+                    </p:column>
+                    
+                    
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Título"/>
+                        </f:facet>
+                        <h:outputText value="#{f.titulo}"/>
+                    </p:column>
+                    
+                    <p:column style="width: 10%">
+                   		 <f:facet name="header">
+                            <h:outputText value="Ano"/>
+                        </f:facet>
+                        <p>#{f.ano}</p>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{serieMBean.seriesEncontradas.size()} séries"
+                                    style="font-weight:bold;" styleClass="p-py-1 p-d-block"/>
+                    </f:facet>
+                </p:selectOneMenu>
+			</h:form>
+		    
+		    <f:facet name="footer">
+		        <p:commandButton type="button" value="Cancelar" styleClass="ui-button-flat p-mr-2" style="width: 6rem" onclick="PF('serie_dlg').hide()"/>
+		        <p:commandButton value="Salvar" style="width: 5rem" action="#{serieMBean.adicionarSerie()}" onsuccess="PF('serie_dlg').hide()">
+		        </p:commandButton>
+		    </f:facet>
+					    
+		</p:dialog>
+		
+		<p:dialog header="Nova Lista" widgetVar="lista_dlg" resizable="false" width="600" showEffect="fade" hideEffect="fade">
+			<h:form  id="formLista">
+				<p:messages id="messages_l" showDetail="false" closable="true" styleClass="msg">
+					<p:autoUpdate/>
+			    </p:messages>
+				<h:panelGrid columns="5" cellpadding="5" styleClass="p-mb-3">
+					<center>
+						<p:outputLabel value="Lista: " for="lista"/>
+						<p:inputText id="lista" value="#{listaMBean.titulo}" placeholder="Inserir nome da lista"
+						required="true" requiredMessage="Informe o título!">	
+						</p:inputText>
+						<p:commandButton value="Salvar" style="width: 5rem" action="#{listaMBean.adicionarLista}"/>
+					</center>	
+				</h:panelGrid>
+		    	
+		    </h:form>
+		    
+		    <f:facet name="footer">
+		        <p:commandButton type="button" value="Cancelar" styleClass="ui-button-flat p-mr-2" style="width: 6rem" onclick="PF('lista_dlg').hide()"/>
+		  
+		    </f:facet>
+					    
+		</p:dialog>
+
+	</ui:composition>
+</h:body>
+
+
+</html>

@@ -1,0 +1,56 @@
+@charset "ISO-8859-1";
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+	 background-color: #4d4949;
+}
+
+.center {
+	margin: auto;
+  width: 50%;
+  padding: 10px;
+  }
+
+
+.caixa{
+	background-color:white;
+	margin-bottom: 2em;
+	margin-top:5em; 
+	text-align:center;
+	border-radius: 25px;
+	width: 80%;
+	height: 30%;
+	margin-left: auto;
+    margin-right: auto; 
+}
+
+.item-titulo{
+	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  	max-width: 200px;
+}
+
+
+
+.titulo-caixa{
+	margin-top: 10px;
+	margin-left:50px;
+	text-align: left;
+	font-size: 25px;
+	color: #4d4949;
+	font-family: 'Roboto', sans-serif;
+}
+
+.filme-item .filme-item-content {
+        border-radius: 3px;
+        text-align: center;
+    }
+
+.filme-item{
+	margin-left:70px;
+	margin-bottom:10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+}
+    
