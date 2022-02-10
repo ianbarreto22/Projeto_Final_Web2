@@ -97,8 +97,19 @@ public class ListaMBean {
 		}
 	}
 
-	public void adicionarProducao(Producao producao) {
-		
+	public void adicionarProducao(Producao producao, Integer idLista) {
+		try{
+			lista = listaDAO.buscarId(idLista);
+			producoesExistentes = lista.getProducoes();
+			producoesExistentes.add(producao);
+			lista.setProducoes(producoesExistentes);
+			listaDAO.salvar(lista);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Filme adicionado à lista!", "Filme adicionado à lista!"));
+		} catch(Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possível adicionar a produção à lista!", "Não foi possível adicionar a produção à lista!"));
+		}
+
 	}
 
 }

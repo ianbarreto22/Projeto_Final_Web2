@@ -3,6 +3,7 @@ package com.projeto.filmes.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -12,6 +13,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.shaded.json.JSONObject;
+import org.primefaces.util.LangUtils;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -40,7 +42,9 @@ public class FilmeMBean implements Serializable{
 	
 	private List<Filme> filmesEncontrados = new ArrayList<Filme>();
 	
-	private static final String IMDB_KEY = "1647a78bb7mshd3d0c82dcbcd838p1b6f35jsn95ddc2ae7677";
+	private String pesquisa = "";
+	
+	private static final String IMDB_KEY = "1fd50227d9msh3fa3b60f2c06f69p1b8e26jsn201fdee07872";
 
 	public Filme getFilme() {
 		return filme;
@@ -65,8 +69,6 @@ public class FilmeMBean implements Serializable{
 	public void setFilmesEncontrados(List<Filme> filmesEncontrados) {
 		this.filmesEncontrados = filmesEncontrados;
 	}
-	
-	
 
 	public List<Filme> getFilmes() {
 		return filmes;
@@ -74,6 +76,14 @@ public class FilmeMBean implements Serializable{
 
 	public void setFilmes(List<Filme> filmes) {
 		this.filmes = filmes;
+	}
+
+	public String getPesquisa() {
+		return pesquisa;
+	}
+
+	public void setPesquisa(String pesquisa) {
+		this.pesquisa = pesquisa;
 	}
 
 	public void buscarFilme() throws UnirestException{
@@ -123,6 +133,7 @@ public class FilmeMBean implements Serializable{
 		try {
 			System.out.println(filme.getId());
 			System.out.println(filme.getTitulo());
+			filmes.add(filme);
 			filmeDAO.salvar(filme);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Filme adicionado!", "Filme adicionado!"));
 		} catch(Exception e) {
@@ -155,6 +166,32 @@ public class FilmeMBean implements Serializable{
 		}
 		
 		this.filmes = lista;
+	}
+	
+	public void apagarFilme(Filme f) {
+		try {
+			filmes.remove(f);
+			filmeDAO.excluir(f);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Filme deletado com sucesso!", ""));
+		} catch(Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possível deletar o filme!", ""));
+		}
+	}
+	
+	public void filtrarTabela() {
+		List<Filme> lista = new ArrayList<Filme>();
+		try {
+			for(Filme f : filmeDAO.listar()) {
+				if(f.getTitulo().toLowerCase().contains(pesquisa.toLowerCase())) {
+					lista.add(f);
+				}
+			}
+			this.filmes = lista;
+		} catch (FilmesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

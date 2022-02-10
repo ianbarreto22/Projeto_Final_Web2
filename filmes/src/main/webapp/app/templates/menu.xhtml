@@ -13,12 +13,14 @@
 		
 		<h:form>
 			<p:menubar>
-				<p:menuitem value="Home" icon="pi pi-fw pi-home"></p:menuitem>
+				<p:menuitem value="Home" icon="pi pi-fw pi-home" outcome="index"></p:menuitem>
 				<p:submenu label="Filmes">
 					<p:menuitem value="Novo Filme" icon="pi pi-fw pi-plus" onclick="PF('filme_dlg').show()"></p:menuitem>
+					<p:menuitem value="Procurar Filme" icon="pi pi-fw pi-search" outcome="filmes"></p:menuitem>
 				</p:submenu>
 				<p:submenu label="Séries">
 					<p:menuitem value="Nova Série" icon="pi pi-fw pi-plus" onclick="PF('serie_dlg').show()"></p:menuitem>
+					<p:menuitem value="Procurar Série" icon="pi pi-fw pi-search" outcome="series"></p:menuitem>
 				</p:submenu>
 				<p:submenu label="Listas" icon="pi pi-fw pi-list">
 					<p:menuitem value="Nova Lista" icon="pi pi-fw pi-plus" onclick="PF('lista_dlg').show()" update="formLista"></p:menuitem>
