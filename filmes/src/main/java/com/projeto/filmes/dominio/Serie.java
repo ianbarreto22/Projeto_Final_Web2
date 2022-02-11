@@ -6,18 +6,21 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
+@PrimaryKeyJoinColumn(name="idProducao")
 @Table(name="series")
 public class Serie extends Producao implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    
     @Column(nullable=false)
     private Integer numeroEpisodios;
     
-
+    
     public Serie() {
         super();
     }

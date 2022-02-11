@@ -37,7 +37,7 @@ public class SerieMBean implements Serializable {
 	
 	private List<Serie> seriesEncontradas = new ArrayList<Serie>();
 	
-	private static final String IMDB_KEY = "1647a78bb7mshd3d0c82dcbcd838p1b6f35jsn95ddc2ae7677";
+	private static final String IMDB_KEY = "1fd50227d9msh3fa3b60f2c06f69p1b8e26jsn201fdee07872";
 
 	public Serie getSerie() {
 		return serie;

@@ -22,7 +22,7 @@ public class FilmeConverter implements Converter{
 		try {
 			response = Unirest.get("https://imdb8.p.rapidapi.com/title/get-details?tconst="+value)
 					.header("x-rapidapi-host", "imdb8.p.rapidapi.com")
-					.header("x-rapidapi-key", "1647a78bb7mshd3d0c82dcbcd838p1b6f35jsn95ddc2ae7677")
+					.header("x-rapidapi-key", "1fd50227d9msh3fa3b60f2c06f69p1b8e26jsn201fdee07872")
 					.asString();
 			JSONObject result = new JSONObject(response.getBody());
 			

@@ -29,8 +29,8 @@
 				<version>3.3</version>
 				<configuration>
 					<!-- versão do Java -->
-					<source>16</source>
-					<target>16</target>
+					<source>9</source>
+					<target>9</target>
 				</configuration>
 			</plugin>
 		</plugins>
