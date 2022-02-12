@@ -44,8 +44,7 @@
 					<p:commandButton value="Enviar" action="#{reviewMBean.cadastrar(filmeMBean.filme.id)}" />
 				</div>
 			</h:form>
-			<p:commandButton action="#{serieMBean.listarSeries()}" icon="pi pi-sync" styleClass="rounded-button ui-button-info" update="listaSerie"/>
-			<div class="card p-col-12" id="listaSerie">
+			<div class="card p-col-12">
 				<p:carousel emptyMessage="Nenhum review adicionado" id="cardFilme" value="#{filmeMBean.listaRewiews}" var="r" numVisible="4" numScroll="4" style="text-align: center">
 					<f:facet name="header">
 						<h2>REVIEWS</h2>
