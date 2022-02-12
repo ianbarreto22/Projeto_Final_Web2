@@ -39,6 +39,7 @@ public class ReviewMBean implements Serializable{
 			review.setUsuario(usuario);
 			review.setProducao_id(idProducao);
 			reviewDAO.salvar(review);
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastrado com sucesso!", "Cadastrado com sucesso!"));
 		} catch(Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possível cadastrar o usuário!", "Não foi possível cadastrar o usuário!"));

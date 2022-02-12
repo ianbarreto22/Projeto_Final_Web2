@@ -18,6 +18,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.projeto.filmes.dao.ProducaoDAO;
 import com.projeto.filmes.dao.SerieDAO;
+import com.projeto.filmes.dominio.Review;
 import com.projeto.filmes.dominio.Serie;
 import com.projeto.filmes.utils.FilmesException;
 
@@ -40,6 +41,10 @@ public class SerieMBean implements Serializable {
 	private String pesquisa = "";
 	
 	private static final String IMDB_KEY = "1fd50227d9msh3fa3b60f2c06f69p1b8e26jsn201fdee07872";
+	
+	private String idNovo = null;
+	
+	private List<Review> listaRewiews = new ArrayList<>();
 
 	public Serie getSerie() {
 		return serie;
@@ -82,7 +87,23 @@ public class SerieMBean implements Serializable {
 	public void setPesquisa(String pesquisa) {
 		this.pesquisa = pesquisa;
 	}
+	
+	public List<Review> getListaRewiews() {
+		return listaRewiews;
+	}
 
+	public void setListaRewiews(List<Review> listaRewiews) {
+		this.listaRewiews = listaRewiews;
+	}
+
+	public String getIdNovo() {
+		return idNovo;
+	}
+
+	public void setIdNovo(String idNovo) {
+		this.idNovo = idNovo;
+	}
+	
 	public void buscarSerie() throws UnirestException {
         this.seriesEncontradas = new ArrayList<Serie>();
 
@@ -187,5 +208,19 @@ public class SerieMBean implements Serializable {
 		}
 		
 		series = lista;
+	}
+	
+	public String verReviews(Serie serie) {
+		this.serie = serie;
+		return "seriesReviews.xhtml?faces-redirect=true&id=" + serie.getId();
+	}
+	
+	public void carregar() throws FilmesException {
+
+        if (this.idNovo != null) {
+            this.serie = serieDAO.buscarId(this.idNovo);
+            this.listaRewiews = new ArrayList<>(this.serie.getReviews());
+        } 
+
 	}
 }

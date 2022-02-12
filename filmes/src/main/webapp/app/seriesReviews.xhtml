@@ -9,8 +9,8 @@
 <ui:composition template="/app/templates/template.xhtml">
 	<ui:define name="resources">
 		<f:metadata>
-			<f:viewParam name="id" value="#{filmeMBean.idNovo}" />
-			<f:viewAction action="#{filmeMBean.carregar}" />
+			<f:viewParam name="id" value="#{serieMBean.idNovo}" />
+			<f:viewAction action="#{serieMBean.carregar}" />
 		</f:metadata>
 	</ui:define>
 	<ui:define name="content">
@@ -18,12 +18,13 @@
 			<div class="filme-info p-col-12">
 				<div class="p-field p-col-12">
 					<div class="filme-img">
-						<p:graphicImage value="#{filmeMBean.filme.poster}" style="width:100%; height:100%"/>
+						<p:graphicImage value="#{serieMBean.serie.poster}" style="width:100%; height:100%"/>
 					</div>
 					<div class="text-info">
-						<h2>#{filmeMBean.filme.titulo}</h2>
-						<span><strong>Duração:</strong> #{filmeMBean.filme.duracao} minutos</span><br></br>
-						<span><strong>Ano:</strong> #{filmeMBean.filme.ano}</span>
+						<h2>#{serieMBean.serie.titulo}</h2>
+						<span><strong>Duração:</strong> #{serieMBean.serie.duracao} minutos</span><br></br>
+						<span><strong>Número de Episódios:</strong> #{serieMBean.serie.numeroEpisodios}</span><br></br>
+						<span><strong>Ano:</strong> #{serieMBean.serie.ano}</span>
 					</div>
 				</div>
 			</div>
@@ -41,12 +42,11 @@
 			        <p:inputTextarea id="comentario" rows="4" value="#{reviewMBean.review.comentario}" required="true" requiredMessage="Digite um comentário."/>
 			    </div>
 			    <div class="p-field p-col-12">
-					<p:commandButton value="Enviar" action="#{reviewMBean.cadastrar(filmeMBean.filme.id)}" />
+					<p:commandButton value="Enviar" action="#{reviewMBean.cadastrar(serieMBean.serie.id)}" />
 				</div>
 			</h:form>
-			<p:commandButton action="#{serieMBean.listarSeries()}" icon="pi pi-sync" styleClass="rounded-button ui-button-info" update="listaSerie"/>
-			<div class="card p-col-12" id="listaSerie">
-				<p:carousel emptyMessage="Nenhum review adicionado" id="cardFilme" value="#{filmeMBean.listaRewiews}" var="r" numVisible="4" numScroll="4" style="text-align: center">
+			<div class="card p-col-12">
+				<p:carousel emptyMessage="Nenhum review adicionado" id="cardFilme" value="#{serieMBean.listaRewiews}" var="r" numVisible="4" numScroll="4" style="text-align: center">
 					<f:facet name="header">
 						<h2>REVIEWS</h2>
 					</f:facet>
