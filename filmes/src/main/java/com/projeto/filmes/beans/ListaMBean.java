@@ -88,7 +88,7 @@ public class ListaMBean {
 		try {
 			HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 			lista.setTitulo(titulo);
-			lista.setUsuario((Usuario) sessao.getAttribute("usuario"));
+			lista.setUsuario_id(((Usuario) sessao.getAttribute("usuario")).getLogin());
 			listaDAO.salvar(lista);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Lista criada!", "Lista criada!"));
 		} catch(Exception e) {

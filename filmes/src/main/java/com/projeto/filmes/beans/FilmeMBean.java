@@ -36,6 +36,8 @@ public class FilmeMBean implements Serializable{
 
 	private Filme filme = new Filme();
 	
+	private Filme filmeNovo = new Filme();
+	
 	private String titulo = "";
 	
 	private String idNovo = null;
@@ -107,6 +109,14 @@ public class FilmeMBean implements Serializable{
 	public void setIdNovo(String idNovo) {
 		this.idNovo = idNovo;
 	}
+	
+	public Filme getFilmeNovo() {
+		return filmeNovo;
+	}
+
+	public void setFilmeNovo(Filme filmeNovo) {
+		this.filmeNovo = filmeNovo;
+	}
 
 	public void buscarFilme() throws UnirestException{
 		this.filmesEncontrados = new ArrayList<Filme>();
@@ -153,10 +163,11 @@ public class FilmeMBean implements Serializable{
 	
 	public void adicionarFilme() {
 		try {
-			System.out.println(filme.getId());
-			System.out.println(filme.getTitulo());
-			filmes.add(filme);
-			filmeDAO.salvar(filme);
+			System.out.println("Inserindo filme:");
+			System.out.println(this.filmeNovo.getId());
+			System.out.println(this.filmeNovo.getTitulo());
+			filmes.add(this.filmeNovo);
+			filmeDAO.salvar(this.filmeNovo);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Filme adicionado!", "Filme adicionado!"));
 		} catch(Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possível cadastrar o filme!", "Não foi possível cadastrar o filme!"));

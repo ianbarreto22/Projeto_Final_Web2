@@ -60,7 +60,7 @@
 			</h:form>
 			
 			<h:form id="filmeForm">
-				<p:selectOneMenu id="selFilme" value="#{filmeMBean.filme}" converter="filmeConverter"
+				<p:selectOneMenu id="selFilme" value="#{filmeMBean.filmeNovo}" converter="filmeConverter"
                     panelStyle="width:180px" effect="fade" var="f"
                     filter="true" filterMatchMode="startsWith" style="width: 550px;" required="true">
                     <p:ajax event="change" process="@this"/>
@@ -132,7 +132,7 @@
 			
 								
 			<h:form id="serieForm">
-				<p:selectOneMenu id="selSerie" value="#{serieMBean.serie}" converter="serieConverter"
+				<p:selectOneMenu id="selSerie" value="#{serieMBean.serieNova}" converter="serieConverter"
                                 panelStyle="width:180px" effect="fade" var="f"
                                 filter="true" filterMatchMode="startsWith" style="width: 550px;">
 

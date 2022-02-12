@@ -29,6 +29,7 @@ public class SerieMBean implements Serializable {
 	private static final long serialVersionUID = 2000781882259817458L;
 
     private Serie serie = new Serie();
+    private Serie serieNova = new Serie();
 
     private String titulo = " ";
 
@@ -45,6 +46,14 @@ public class SerieMBean implements Serializable {
 	private String idNovo = null;
 	
 	private List<Review> listaRewiews = new ArrayList<>();
+
+	public Serie getSerieNova() {
+		return serieNova;
+	}
+
+	public void setSerieNova(Serie serieNova) {
+		this.serieNova = serieNova;
+	}
 
 	public Serie getSerie() {
 		return serie;
@@ -146,9 +155,9 @@ public class SerieMBean implements Serializable {
     public void adicionarSerie() {
     	ProducaoDAO producaoDAO = new ProducaoDAO();
         try {
-            System.out.println(serie.getId());
-            series.add(serie);
-            serieDAO.salvar(serie);
+            System.out.println(this.serieNova.getId());
+            series.add(this.serieNova);
+            serieDAO.salvar(this.serieNova);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Série adicionada!", "Série adicionada!"));
         }
         catch(Exception e) {

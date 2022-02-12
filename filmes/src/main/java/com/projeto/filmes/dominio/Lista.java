@@ -32,10 +32,8 @@ public class Lista implements Serializable {
     @ManyToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name= "producao_id")
     private List<Producao> producoes;
-    
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+   
+    private String usuario_id;
     
     public Lista() {
     	super();
@@ -60,17 +58,18 @@ public class Lista implements Serializable {
 		this.producoes = producoes;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public Long getId() {
 		return id;
 	}
+
+	public String getUsuario_id() {
+		return usuario_id;
+	}
+
+	public void setUsuario_id(String usuario_id) {
+		this.usuario_id = usuario_id;
+	}
+	
     
 	
     
