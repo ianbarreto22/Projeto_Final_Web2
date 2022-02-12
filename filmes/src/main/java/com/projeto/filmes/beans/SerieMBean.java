@@ -36,6 +36,8 @@ public class SerieMBean implements Serializable {
     private List<Serie> series = inicializaSeries();
 	
 	private List<Serie> seriesEncontradas = new ArrayList<Serie>();
+
+	private String pesquisa = "";
 	
 	private static final String IMDB_KEY = "1fd50227d9msh3fa3b60f2c06f69p1b8e26jsn201fdee07872";
 
@@ -69,6 +71,16 @@ public class SerieMBean implements Serializable {
 
 	public void setSeriesEncontradas(List<Serie> seriesEncontradas) {
 		this.seriesEncontradas = seriesEncontradas;
+	}
+	
+	
+
+	public String getPesquisa() {
+		return pesquisa;
+	}
+
+	public void setPesquisa(String pesquisa) {
+		this.pesquisa = pesquisa;
 	}
 
 	public void buscarSerie() throws UnirestException {
@@ -114,6 +126,7 @@ public class SerieMBean implements Serializable {
     	ProducaoDAO producaoDAO = new ProducaoDAO();
         try {
             System.out.println(serie.getId());
+            series.add(serie);
             serieDAO.salvar(serie);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Série adicionada!", "Série adicionada!"));
         }
@@ -146,5 +159,33 @@ public class SerieMBean implements Serializable {
 		}
 		
 		this.series = lista;
+	}
+	
+	public void apagarSerie(Serie s) {
+		try {
+			series.remove(s);
+			serieDAO.excluir(s);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Série deletada com sucesso!", ""));
+		} catch(Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possível deletar a série!", ""));
+		}
+	}
+	
+	public void filtrarTabela() {
+		List<Serie> lista = new ArrayList<Serie>();
+		
+		try {
+			for(Serie s : serieDAO.listar()) {
+				if(s.getTitulo().toLowerCase().equals(pesquisa.toLowerCase())) {
+					lista.add(s);
+				}
+			}
+		} catch (FilmesException e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Não foi possível listar as série!", ""));
+			e.printStackTrace();
+		}
+		
+		series = lista;
 	}
 }

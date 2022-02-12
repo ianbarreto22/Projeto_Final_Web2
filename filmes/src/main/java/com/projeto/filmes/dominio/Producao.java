@@ -3,12 +3,16 @@ package com.projeto.filmes.dominio;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -34,8 +38,9 @@ public class Producao implements Serializable{
 	@Column(nullable=false)
 	protected Integer ano;
 
-	@OneToMany(mappedBy="producao")
-	private List<Review> reviews;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "producao_id")
+	private Set<Review> reviews;
 
 	
 
@@ -78,7 +83,11 @@ public class Producao implements Serializable{
 	public void setAno(Integer ano) {
 		this.ano = ano;
 	}
-
+	
+	public Set<Review> getReviews() {
+		return reviews;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(ano, duracao, id, poster, titulo);

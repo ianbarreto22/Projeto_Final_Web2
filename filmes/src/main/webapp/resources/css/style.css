@@ -53,4 +53,51 @@ body {
 	margin-bottom:10px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
 }
-    
+
+.reviewContainer{
+	text-align:center;
+	background-color: white;
+    width: 80%;
+    margin: auto !important;
+    padding: 20px; 
+}
+.reviewContainer form{
+	width: 50%;
+	margin:auto;
+}
+.reviewContainer .card{
+	margin-top:80px;
+}
+.reviewContainer .filme-item-content{
+	min-height: 200px;
+}
+.reviewContainer .filme-item-content > div{
+	min-height: 200px;
+}
+.reviewContainer .filme-item{
+	height: 85% !important;
+	border: 1px solid var(--surface-d);
+    border-radius: 3px;
+    text-align: center;
+    margin: 2rem 0;
+    width: 98%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    margin-left: 0 !important;
+}
+.filme-info > div{
+	width: 50%;
+    margin: auto;
+}
+.filme-info .filme-img{
+	width:220px; 
+	height:300px; 
+	float:left;
+}
+.filme-info .text-info{
+	float:left;
+	margin-left: 20px;
+	text-align: left;
+}
+.filme-info .text-info > h2{
+	margin-top: 0;	
+}

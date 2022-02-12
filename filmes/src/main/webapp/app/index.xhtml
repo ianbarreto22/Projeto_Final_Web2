@@ -14,7 +14,7 @@
 	
 		<ui:define name="content">
 			<h:form id="listaFilme">
-			
+				<p:autoUpdate/>
 				<div class="center">
 					<p:messages id="messages" showDetail="false" closable="true" styleClass="msg">
 						<p:autoUpdate/>
@@ -26,7 +26,7 @@
 					        <h1 class="titulo-caixa">Filmes Adicionados</h1>   	
 					        <p:commandButton action="#{filmeMBean.listarFilmes}" icon="pi pi-sync" styleClass="rounded-button ui-button-info" update="carFilme"/>
 				        </h:panelGrid>
-				        <p:carousel id="carFilme" value="#{filmeMBean.filmes}" var="f" numVisible="4" numScroll="4" style="text-align: center">
+				        <p:carousel emptyMessage="Nenhum filme adicionado" id="carFilme" value="#{filmeMBean.filmes}" var="f" numVisible="4" numScroll="4" style="text-align: center">
 				        
 				            
 				            
@@ -44,9 +44,11 @@
 				                        </p>
 				                        
 				                        <div>
-				                            <p:commandButton onclick="location.href='#{filmeMBean.verReviews(f.id)}'" icon="pi pi-eye" styleClass="ui-button-info rounded-button p-mr-2"/>
+				                            <p:commandButton onclick="location.href='#{filmeMBean.verReviews(f)}'" icon="pi pi-eye" styleClass="ui-button-info rounded-button p-mr-2"/>
 				                            <p:commandButton type="button" icon="pi pi-list" styleClass="ui-button-help rounded-button p-mr-2" />
-				                            <p:commandButton type="button" icon="pi pi-trash" styleClass="ui-button-danger rounded-button" />
+				                            <p:commandButton action="#{filmeMBean.apagarFilme(f)}" update=":listaFilme:carFilme" icon="pi pi-trash" styleClass="ui-button-danger rounded-button">
+							                	<p:confirm header="Apagar Filme" message="Deseja apagar esse filme?" icon="pi pi-exclamation-triangle"/>
+							               </p:commandButton>
 				                        </div>
 				                        
 				                    </div>
@@ -59,13 +61,14 @@
 			
 			
 			<h:form id="listaSerie">
+				<p:autoUpdate/>
 					<div class="card caixa">
 						<h:panelGrid columns="2" cellpadding="5" styleClass="p-mb-3">
 				              	<h1 class="titulo-caixa">Séries Adicionadas</h1>
 				             <p:commandButton action="#{serieMBean.listarSeries()}" icon="pi pi-sync" styleClass="rounded-button ui-button-info" update="listaSerie"/>
 				         </h:panelGrid>
 				       
-				        <p:carousel value="#{serieMBean.series}" var="s" numVisible="4" numScroll="4" style="text-align: center">
+				        <p:carousel emptyMessage="Nenhuma série adicionado"  id="carSerie" value="#{serieMBean.series}" var="s" numVisible="4" numScroll="4" style="text-align: center">
 				            <div class="filme-item" style="width:190px; height:98%; border-radius: 25px ;">
 				                <div class="filme-item-content">
 				                    <div class="p-mb-3">
@@ -80,18 +83,23 @@
 				                        </p>
 				                        
 				                    </div>
-				                    
-				                    <div>
-				                            <p:commandButton type="button" icon="pi pi-eye" styleClass="ui-button-info rounded-button p-mr-2" />
-				                            <p:commandButton type="button" icon="pi pi-list" styleClass="ui-button-help rounded-button p-mr-2" />
-				                            <p:commandButton type="button" icon="pi pi-trash" styleClass="ui-button-danger rounded-button" />
-				                        </div>
+				                    <p:commandButton type="button" icon="pi pi-eye" styleClass="ui-button-info rounded-button p-mr-2" />
+					                <p:commandButton type="button" icon="pi pi-list" styleClass="ui-button-help rounded-button p-mr-2" />
+					                <p:commandButton action="#{serieMBean.apagarSerie(s)}" icon="pi pi-trash" update="@form" styleClass="ui-button-danger rounded-button">
+					                	<p:confirm header="Apagar Série" message="Deseja apagar essa série?" icon="pi pi-exclamation-triangle"/>
+					               </p:commandButton>
 				                </div>
 				            </div>
 				        </p:carousel>
 				    </div>
 	
 			</h:form>
+			
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+	            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+	            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes">
+	            </p:commandButton>
+	        </p:confirmDialog>
 			
 		</ui:define>
 		

@@ -111,6 +111,28 @@ public class GenericDAO<Entidade> implements Serializable{
 		}
 		return entidade;
 	}
+	
+	public Entidade buscarId(String id) throws FilmesException {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		Entidade entidade = null;
+		try {
+
+			sessao.getTransaction().begin();
+			entidade = (Entidade) sessao.find(classe, id);
+			sessao.getTransaction().commit();
+
+		} catch (HibernateException he) {
+			if (sessao.getTransaction().isActive()) {
+				sessao.getTransaction().rollback();
+			}
+			throw new FilmesException("Erro ao atualizar registro: " + he.getMessage());
+		} finally {
+			if (sessao.isOpen()) {
+				sessao.close();
+			}
+		}
+		return entidade;
+	}
 
 	
 	
